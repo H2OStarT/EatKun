@@ -19,8 +19,8 @@
     <!-- 隐藏的网易云播放器1，进入页面时自动播放 -->
     <iframe id="music1" frameborder="no" border="0" marginwidth="0" marginheight="0" width="0" height="0" src="//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66"></iframe>
 
-    <!-- 隐藏的网易云播放器2，开始游戏后播放 -->
-    <iframe id="music2" frameborder="no" border="0" marginwidth="0" marginheight="0" width="0" height="0" style="display: none;" src="//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66"></iframe>
+    <!-- 网易云播放器2，初始时不加载，开始游戏后才播放 -->
+    <iframe id="music2" frameborder="no" border="0" marginwidth="0" marginheight="0" width="0" height="0" style="display: none;"></iframe>
 
     <div id="GameScoreLayer" class="BBOX SHADE bgc1" style="display:none;">
         <div style="padding:5%;margin-top: 200px;background-color: rgba(125, 181, 216, 0.3);">
@@ -77,12 +77,13 @@
     <script>
         function startGame() {
             // 停止第一个音乐
-            document.getElementById('music1').src = '';
+            var music1 = document.getElementById('music1');
+            music1.src = ''; // 取消第一个音乐的 src，从而停止播放
 
             // 显示并播放第二个音乐
             var music2 = document.getElementById('music2');
             music2.style.display = 'block';
-            music2.src = "//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66";
+            music2.src = "//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66"; // 动态设置 src 来加载第二首音乐
 
             // 继续游戏初始化逻辑
             // initGame(); // 假设这是游戏开始的函数
@@ -91,4 +92,5 @@
 </body>
 
 </html>
+
 
