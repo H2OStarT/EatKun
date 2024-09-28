@@ -13,9 +13,56 @@
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
     <script src="./static/index.js"></script>
+    <style>
+        /* 弹窗样式 */
+        #songModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        #songModalContent {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .closeBtn {
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+        }
+        
+        .closeBtn:hover,
+        .closeBtn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body onLoad="init()" oncontextmenu=self.event.returnValue=false>
+
+    <div id="GameScoreLayer" class="BBOX SHADE bgc1" style="display:none;">
+        <div style="padding:5%;margin-top: 200px;background-color: rgba(125, 181, 216, 0.3);">
+            <div id="GameScoreLayer-text"></div>
+            <div id="GameScoreLayer-score" style="margin:10px 0;">得分</div>
+            <div id="GameScoreLayer-bast">最佳</div>
+            <button type="button" class="btn btn-secondary btn-lg" onclick="replayBtn()">重来</button>
+        </div>
+    </div>
+
     <div id="welcome" class="SHADE BOX-M">
         <div class="welcome-bg FILL"></div>
         <div class="FILL BOX-M" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;">
@@ -24,106 +71,74 @@
                 <div style="font-size:2.2em; color:#fff; line-height:1.5em;">
                     从最底下la太美开始<br />
                     看看你20秒能多少分<br />
+                    手机端可能会出现贴图消失<br />
+                    属正常现象，等待一下即可<br />
                 </div>
                 <br />
                 <div id="btn_group" style="display: block;">
-                    <button type="button" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
+                    <button type="button" id="ready-btn" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
                     <br /><br />
-                    <!-- 按钮点击后弹出选择歌曲的弹窗 -->
-                    <button type="button" class="btn btn-secondary btn-lg" onclick="showMusicSelection()">选择歌曲</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">按键自定义</button>
+                    <br /><br />
+                    <button type="button" class="btn btn-info btn-lg" onclick="openSongModal()">选择歌曲</button>
+                </div>
+                <div id="setting" style="display: none;">
+                    <div class="input-group mb-3" style="display: none;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">名字</span>
+                        </div>
+                        <input type="text" id="username" class="form-control" maxlength=8 placeholder="用于纪录排行(特殊字符会被过滤)">
+                    </div>
+                    <div class="input-group mb-3" style="display: none;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">留言</span>
+                        </div>
+                        <input type="text" id="message" class="form-control" maxlength=50 placeholder="禁广告/脏话(本项可不填)">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">按键</span>
+                        </div>
+                        <input type="text" id="keyboard" class="form-control" maxlength=4 placeholder="默认为1234">
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="show_btn();save_cookie();">完成</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 弹窗，选择音乐 -->
-    <div id="musicSelectionModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeMusicSelection()">&times;</span>
-            <h2>选择音乐播放</h2>
-            <div id="musicOptions">
-                <button class="btn btn-primary" onclick="playMusic('2145509123')">Love Party</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2066577934')">相见即相恋</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2066847713')">夕阳西下</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2067567035')">阳光沐浴</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2615357565')">时空余晖</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2070109881')">新爱Drill</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2113419406')">恋爱告白</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2138192160')">阿拉斯加海湾</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2060811949')">这一世遇你</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2145509205')">利己主义者</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2068481501')">Forever Brother</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2626884237')">暗恋回忆录</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2607008229')">资本游戏</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622773376')">心杂</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2069059939')">星辰与爱</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622775174')">乙游·玩家</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2073546992')">情书</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622773547')">总是在</button><br>
+    <!-- 弹窗 -->
+    <div id="songModal">
+        <div id="songModalContent">
+            <span class="closeBtn" onclick="closeSongModal()">&times;</span>
+            <h3>选择歌曲</h3>
+            <div id="songList">
+                <p><strong>Love Party:</strong> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509123&auto=0&height=66"></iframe></p>
+                <p><strong>相见即相恋:</strong> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066577934&auto=0&height=66"></iframe></p>
+                <p><strong>夕阳西下:</strong> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066847713&auto=0&height=66"></iframe></p>
+                <p><strong>阳光沐浴:</strong> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2067567035&auto=0&height=66"></iframe></p>
+                <!-- 更多歌曲选项 -->
             </div>
         </div>
     </div>
 
-    <!-- 隐藏的 iframe，用于播放音乐 -->
-    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" style="display:none;"></iframe>
-
     <script>
-        // 显示选择音乐的弹窗
-        function showMusicSelection() {
-            document.getElementById('musicSelectionModal').style.display = 'block';
+        // 打开弹窗
+        function openSongModal() {
+            document.getElementById('songModal').style.display = 'block';
         }
 
-        // 关闭选择音乐的弹窗
-        function closeMusicSelection() {
-            document.getElementById('musicSelectionModal').style.display = 'none';
+        // 关闭弹窗
+        function closeSongModal() {
+            document.getElementById('songModal').style.display = 'none';
         }
 
-        // 播放音乐
-        function playMusic(id) {
-            var musicPlayer = document.getElementById('musicPlayer');
-            musicPlayer.src = "//music.163.com/outchain/player?type=2&id=" + id + "&auto=1&height=66";
-            musicPlayer.style.display = 'block';
-            closeMusicSelection();  // 关闭弹窗
+        // 开始游戏的函数
+        function startGame() {
+            // 继续游戏初始化逻辑
+            // initGame(); // 假设这是游戏开始的函数
         }
     </script>
-
-    <style>
-        /* 弹窗样式 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover, .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
-
 </body>
 
 </html>
