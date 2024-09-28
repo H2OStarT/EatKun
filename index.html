@@ -3,81 +3,74 @@
 
 <head>
     <title>la太美</title>
-    <meta itemprop="name" content="la太美" />
-    <meta itemprop="description" content="la太美" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="./static/index.css" rel="stylesheet" type="text/css">
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-    <script src="./static/index.js"></script>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        /* 自定义样式 */
+        #songModal .modal-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- 按钮 -->
-    <button type="button" class="btn btn-primary" onclick="openSongModal()">选择歌曲</button>
+    <div class="container">
+        <!-- 创建一个按钮，用来打开弹窗 -->
+        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#songModal">
+            选择歌曲
+        </button>
 
-    <!-- 弹窗 -->
-    <div id="songModal" class="modal" tabindex="-1" role="dialog" style="display:none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">选择一首歌曲</h5>
-                    <button type="button" class="close" onclick="closeSongModal()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- 歌曲列表 -->
-                    <div id="songList">
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2145509123')">Love Party</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2066577934')">相见即相恋</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2066847713')">夕阳西下</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2067567035')">阳光沐浴</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2615357565')">时空余晖</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2070109881')">新爱Drill</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2113419406')">恋爱告白</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2138192160')">阿拉斯加海湾</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2060811949')">这一世遇你</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2145509205')">利己主义者</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2068481501')">Forever Brother</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2626884237')">暗恋回忆录</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2607008229')">资本游戏</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2622773376')">心杂</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2069059939')">星辰与爱</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2622775174')">乙游·玩家</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2073546992')">情书</button><br>
-                        <button type="button" class="btn btn-secondary" onclick="playSong('2622773547')">总是在</button><br>
+        <!-- 创建一个模态框（弹窗） -->
+        <div class="modal fade" id="songModal" tabindex="-1" role="dialog" aria-labelledby="songModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="songModalLabel">选择要播放的歌曲</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeSongModal()">关闭</button>
+                    <div class="modal-body">
+                        <!-- 添加歌曲播放选项 -->
+                        <div id="musicPlayer"></div>
+                        <ul class="list-group">
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66')">Love Party</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66')">相见即相恋</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66')">夕阳西下</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66')">阳光沐浴</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2615357565&auto=1&height=66')">时空余晖</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2070109881&auto=1&height=66')">新爱Drill</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2113419406&auto=1&height=66')">恋爱告白</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2138192160&auto=1&height=66')">阿拉斯加海湾</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2060811949&auto=1&height=66')">这一世遇你</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509205&auto=1&height=66')">利己主义者</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2068481501&auto=1&height=66')">Forever Brother</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2626884237&auto=1&height=66')">暗恋回忆录</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2607008229&auto=1&height=66')">资本游戏</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622773376&auto=1&height=66')">心杂</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2069059939&auto=1&height=66')">星辰与爱</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622775174&auto=1&height=66')">乙游·玩家</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2073546992&auto=1&height=66')">情书</li>
+                            <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622773547&auto=1&height=66')">总是在</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 播放器 -->
-    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" style="display:none;"></iframe>
-
+    <!-- JavaScript 用于动态切换歌曲 -->
     <script>
-        // 打开弹窗
-        function openSongModal() {
-            document.getElementById('songModal').style.display = 'block';
-        }
-
-        // 关闭弹窗
-        function closeSongModal() {
-            document.getElementById('songModal').style.display = 'none';
-        }
-
-        // 播放歌曲
-        function playSong(songId) {
-            var player = document.getElementById('musicPlayer');
-            player.style.display = 'block';
-            player.src = "//music.163.com/outchain/player?type=2&id=" + songId + "&auto=1&height=66";
-            closeSongModal();
+        function playSong(url) {
+            document.getElementById('musicPlayer').innerHTML = '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="' + url + '"></iframe>';
         }
     </script>
 
