@@ -7,14 +7,15 @@
     <meta itemprop="description" content="la太美" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="./static/index.css" rel="stylesheet" type="text/css">
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
+    <script src="./static/index.js"></script>
     <style>
-        .song-selection {
-            display: none; /* 默认隐藏 */
-            margin-top: 20px;
-        }
-        .song-frame {
-            margin-top: 10px;
+        .modal-content {
+            background-color: rgba(125, 181, 216, 0.8);
         }
     </style>
 </head>
@@ -47,28 +48,7 @@
                     <br /><br />
                     <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">按键自定义</button>
                     <br /><br />
-                    <button type="button" class="btn btn-info btn-lg" onclick="toggleSongSelection()">选择歌曲</button>
-                </div>
-                <div id="songSelection" class="song-selection">
-                    <button class="btn btn-link" onclick="loadSong('2145509123')">Love Party</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2066577934')">相见即相恋</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2066847713')">夕阳西下</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2067567035')">阳光沐浴</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2615357565')">时空余晖</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2070109881')">新爱Drill</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2113419406')">恋爱告白</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2138192160')">阿拉斯加海湾</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2060811949')">这一世遇你</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2145509205')">利己主义者</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2068481501')">Forever Brother</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2626884237')">暗恋回忆录</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2607008229')">资本游戏</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2622773376')">心杂</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2069059939')">星辰与爱</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2622775174')">乙游·玩家</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2073546992')">情书</button><br>
-                    <button class="btn btn-link" onclick="loadSong('2622773547')">总是在</button><br>
-                    <div id="songFrame" class="song-frame"></div>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#songModal">选择歌曲</button>
                 </div>
                 <div id="setting" style="display: none;">
                     <div class="input-group mb-3" style="display: none;">
@@ -95,14 +75,47 @@
         </div>
     </div>
 
+    <!-- 歌曲选择弹窗 -->
+    <div class="modal fade" id="songModal" tabindex="-1" role="dialog" aria-labelledby="songModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="songModalLabel">选择歌曲</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-link" onclick="loadSong('2145509123')">Love Party</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2066577934')">相见即相恋</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2066847713')">夕阳西下</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2067567035')">阳光沐浴</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2615357565')">时空余晖</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2070109881')">新爱Drill</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2113419406')">恋爱告白</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2138192160')">阿拉斯加海湾</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2060811949')">这一世遇你</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2145509205')">利己主义者</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2068481501')">Forever Brother</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2626884237')">暗恋回忆录</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2607008229')">资本游戏</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2622773376')">心杂</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2069059939')">星辰与爱</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2622775174')">乙游·玩家</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2073546992')">情书</button><br>
+                    <button class="btn btn-link" onclick="loadSong('2622773547')">总是在</button><br>
+                    <div id="songFrame" style="margin-top: 10px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function startGame() {
             // 继续游戏初始化逻辑
-        }
-
-        function toggleSongSelection() {
-            const songSelection = document.getElementById('songSelection');
-            songSelection.style.display = songSelection.style.display === 'none' ? 'block' : 'none';
         }
 
         function loadSong(songId) {
@@ -111,6 +124,9 @@
         }
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT6R8V6My2G1Q2Jq/0trm/h0X8rJ4bS5XyN5wP5d79DgD4az44" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-JZC6Spejh4cpUo8yR6sA1mF6Yb59Q8N6bYb2v1g6Y0p0n7Ez7rK7U98zEl35j1D" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-ChfqqxuZ0QzZlgbnTXhC28f5Lw/1kAv4zUPT60Zz4M4e09zwA2C7G/51t2ZZ+8X2" crossorigin="anonymous"></script>
 </body>
 
 </html>
