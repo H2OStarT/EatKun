@@ -1,128 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
-    <title>la太美</title>
-    <meta itemprop="name" content="la太美" />
-    <meta itemprop="description" content="la太美" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="./static/index.css" rel="stylesheet" type="text/css">
-    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
-    <script src="./static/index.js"></script>
-</head>
-
-<body onLoad="init()" oncontextmenu=self.event.returnValue=false>
-    <div id="welcome" class="SHADE BOX-M">
-        <div class="welcome-bg FILL"></div>
-        <div class="FILL BOX-M" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;">
-            <div style="margin:0 8% 0 9%;">
-                <div style="font-size:2.6em; color:#FEF002;">la太美！！！</div><br />
-                <div style="font-size:2.2em; color:#fff; line-height:1.5em;">
-                    从最底下la太美开始<br />
-                    看看你20秒能多少分<br />
-                </div>
-                <br />
-                <div id="btn_group" style="display: block;">
-                    <button type="button" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
-                    <br /><br />
-                    <!-- 按钮点击后弹出选择歌曲的弹窗 -->
-                    <button type="button" class="btn btn-secondary btn-lg" onclick="showMusicSelection()">选择歌曲</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 弹窗，选择音乐 -->
-    <div id="musicSelectionModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeMusicSelection()">&times;</span>
-            <h2>选择音乐播放</h2>
-            <div id="musicOptions">
-                <button class="btn btn-primary" onclick="playMusic('2145509123')">Love Party</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2066577934')">相见即相恋</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2066847713')">夕阳西下</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2067567035')">阳光沐浴</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2615357565')">时空余晖</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2070109881')">新爱Drill</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2113419406')">恋爱告白</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2138192160')">阿拉斯加海湾</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2060811949')">这一世遇你</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2145509205')">利己主义者</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2068481501')">Forever Brother</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2626884237')">暗恋回忆录</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2607008229')">资本游戏</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622773376')">心杂</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2069059939')">星辰与爱</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622775174')">乙游·玩家</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2073546992')">情书</button><br>
-                <button class="btn btn-primary" onclick="playMusic('2622773547')">总是在</button><br>
-            </div>
-        </div>
-    </div>
-
-    <!-- 隐藏的 iframe，用于播放音乐 -->
-    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" style="display:none;"></iframe>
-
-    <script>
-        // 显示选择音乐的弹窗
-        function showMusicSelection() {
-            document.getElementById('musicSelectionModal').style.display = 'block';
-        }
-
-        // 关闭选择音乐的弹窗
-        function closeMusicSelection() {
-            document.getElementById('musicSelectionModal').style.display = 'none';
-        }
-
-        // 播放音乐
-        function playMusic(id) {
-            var musicPlayer = document.getElementById('musicPlayer');
-            musicPlayer.src = "//music.163.com/outchain/player?type=2&id=" + id + "&auto=1&height=66";
-            musicPlayer.style.display = 'block';
-            closeMusicSelection();  // 关闭弹窗
-        }
-    </script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择歌曲并播放</title>
     <style>
         /* 弹窗样式 */
-        .modal {
+        #songModal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .modal-content {
-            background-color: #fefefe;
+        #songModalContent {
+            background-color: white;
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 500px;
+            max-width: 600px;
         }
 
-        .close {
-            color: #aaa;
+        .closeBtn {
             float: right;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
+            color: #aaa;
         }
 
-        .close:hover, .close:focus {
+        .closeBtn:hover,
+        .closeBtn:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
+        iframe {
+            display: none;
+        }
     </style>
+</head>
+
+<body>
+
+    <button onclick="openSongModal()">选择歌曲</button>
+
+    <!-- 弹窗 -->
+    <div id="songModal">
+        <div id="songModalContent">
+            <span class="closeBtn" onclick="closeSongModal()">&times;</span>
+            <h3>选择歌曲</h3>
+            <div id="songList">
+                <button onclick="playSong('2145509123')">Love Party</button>
+                <button onclick="playSong('2066577934')">相见即相恋</button>
+                <button onclick="playSong('2066847713')">夕阳西下</button>
+                <button onclick="playSong('2067567035')">阳光沐浴</button>
+                <button onclick="playSong('2615357565')">时空余晖</button>
+                <button onclick="playSong('2070109881')">新爱Drill</button>
+                <button onclick="playSong('2113419406')">恋爱告白</button>
+                <button onclick="playSong('2138192160')">阿拉斯加海湾</button>
+                <button onclick="playSong('2060811949')">这一世遇你</button>
+                <button onclick="playSong('2145509205')">利己主义者</button>
+                <button onclick="playSong('2068481501')">Forever Brother</button>
+                <button onclick="playSong('2626884237')">暗恋回忆录</button>
+                <button onclick="playSong('2607008229')">资本游戏</button>
+                <button onclick="playSong('2622773376')">心杂</button>
+                <button onclick="playSong('2069059939')">星辰与爱</button>
+                <button onclick="playSong('2622775174')">乙游·玩家</button>
+                <button onclick="playSong('2073546992')">情书</button>
+                <button onclick="playSong('2622773547')">总是在</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隐藏的 iframe 播放器 -->
+    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src=""></iframe>
+
+    <script>
+        // 打开弹窗
+        function openSongModal() {
+            document.getElementById('songModal').style.display = 'block';
+        }
+
+        // 关闭弹窗
+        function closeSongModal() {
+            document.getElementById('songModal').style.display = 'none';
+        }
+
+        // 播放歌曲
+        function playSong(songId) {
+            var iframe = document.getElementById('musicPlayer');
+            iframe.src = "//music.163.com/outchain/player?type=2&id=" + songId + "&auto=1&height=66";
+            iframe.style.display = "block";
+        }
+    </script>
 
 </body>
 
