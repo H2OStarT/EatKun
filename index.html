@@ -42,6 +42,8 @@
                     <button type="button" id="ready-btn" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
                     <br /><br />
                     <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">按键自定义</button>
+                    <br /><br />
+                    <button type="button" class="btn btn-info btn-lg" onclick="showSongSelection()">选择歌曲</button> <!-- 新增按钮 -->
                 </div>
                 <div id="setting" style="display: none;">
                     <div class="input-group mb-3" style="display: none;">
@@ -68,12 +70,78 @@
         </div>
     </div>
 
+    <!-- 歌曲选择弹窗 -->
+    <div id="songSelectionModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="songSelectionLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="songSelectionLabel">选择歌曲</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>选择一首歌曲播放：</p>
+                    <div>
+                        <h6>Love Party：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66"></iframe>
+                        <h6>相见即相恋：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66"></iframe>
+                        <h6>夕阳西下：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66"></iframe>
+                        <h6>阳光沐浴：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66"></iframe>
+                        <h6>时空余晖：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2615357565&auto=1&height=66"></iframe>
+                        <h6>新爱Drill：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2070109881&auto=1&height=66"></iframe>
+                        <h6>恋爱告白：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2113419406&auto=1&height=66"></iframe>
+                        <h6>阿拉斯加海湾：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2138192160&auto=1&height=66"></iframe>
+                        <h6>这一世遇你：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2060811949&auto=1&height=66"></iframe>
+                        <h6>利己主义者：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509205&auto=1&height=66"></iframe>
+                        <h6>Forever Brother：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2068481501&auto=1&height=66"></iframe>
+                        <h6>暗恋回忆录：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2626884237&auto=1&height=66"></iframe>
+                        <h6>资本游戏：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2607008229&auto=1&height=66"></iframe>
+                        <h6>心杂：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622773376&auto=1&height=66"></iframe>
+                        <h6>星辰与爱：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2069059939&auto=1&height=66"></iframe>
+                        <h6>乙游·玩家：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622775174&auto=1&height=66"></iframe>
+                        <h6>情书：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2073546992&auto=1&height=66"></iframe>
+                        <h6>总是在：</h6>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622773547&auto=1&height=66"></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function startGame() {
             // 继续游戏初始化逻辑
             // initGame(); // 假设这是游戏开始的函数
         }
+
+        function showSongSelection() {
+            $('#songSelectionModal').modal('show'); // 显示歌曲选择弹窗
+        }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965Izjsw8gOPB+Z1hF8H5D+Zc9QQ/PcA0Puj5Z6Pht3I5cU0si9F5z5Y5" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-JjSmVgyd0p3p1j8bF+XK+KjtS+F2z3U2ZlvT4Rya6e0b3s+f+X6JQ45E6F3/F4yB" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8j3jB0m0cG5u7R8b6l0/f12W2X0sS4l6FJ90lfQOS9Fw4U6vZJ" crossorigin="anonymous"></script>
 </body>
 
 </html>
