@@ -7,8 +7,12 @@
     <meta itemprop="description" content="la太美" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="./static/index.css" rel="stylesheet" type="text/css">
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
+    <script src="./static/index.js"></script>
 </head>
 
 <body onLoad="init()" oncontextmenu=self.event.returnValue=false>
@@ -40,7 +44,6 @@
                     <button type="button" id="ready-btn" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
                     <br /><br />
                     <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">按键自定义</button>
-                    <!-- 新增音乐选择按钮 -->
                     <br /><br />
                     <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#songModal">选择音乐</button>
                 </div>
@@ -70,45 +73,43 @@
         </div>
     </div>
 
-   <!-- 音乐选择弹窗 -->
-<div class="modal fade" id="songModal" tabindex="-1" role="dialog" aria-labelledby="songModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="songModalLabel">选择要播放的歌曲</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- 添加歌曲播放选项 -->
-                <div id="musicPlayer"></div>
-                <ul class="list-group">
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66')">Love Party</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66')">相见即相恋</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66')">夕阳西下</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66')">阳光沐浴</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2615357565&auto=1&height=66')">时空余晖</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2070109881&auto=1&height=66')">新爱Drill</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2113419406&auto=1&height=66')">恋爱告白</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2138192160&auto=1&height=66')">阿拉斯加海湾</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2060811949&auto=1&height=66')">这一世遇你</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509205&auto=1&height=66')">利己主义者</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2068481501&auto=1&height=66')">Forever Brother</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2626884237&auto=1&height=66')">暗恋回忆录</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2607008229&auto=1&height=66')">资本游戏</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622773376&auto=1&height=66')">心杂</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2069059939&auto=1&height=66')">星辰与爱</li>
-                    <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622775174&auto=1&height=66')">乙游·不屑</li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <!-- 音乐选择弹窗 -->
+    <div class="modal fade" id="songModal" tabindex="-1" role="dialog" aria-labelledby="songModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="songModalLabel">选择要播放的歌曲</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="musicPlayer"></div>
+                    <ul class="list-group">
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66')">Love Party</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66')">相见即相恋</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66')">夕阳西下</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66')">阳光沐浴</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2615357565&auto=1&height=66')">时空余晖</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2070109881&auto=1&height=66')">新爱Drill</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2113419406&auto=1&height=66')">恋爱告白</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2138192160&auto=1&height=66')">阿拉斯加海湾</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2060811949&auto=1&height=66')">这一世遇你</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2145509205&auto=1&height=66')">利己主义者</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2068481501&auto=1&height=66')">Forever Brother</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2626884237&auto=1&height=66')">暗恋回忆录</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2607008229&auto=1&height=66')">资本游戏</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622773376&auto=1&height=66')">心杂</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2069059939&auto=1&height=66')">星辰与爱</li>
+                        <li class="list-group-item" onclick="playSong('//music.163.com/outchain/player?type=2&id=2622775174&auto=1&height=66')">乙游·不屑</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 
     <script>
         function startGame() {
@@ -116,15 +117,28 @@
             // initGame(); // 假设这是游戏开始的函数
         }
 
-        // 播放音乐函数
+        function show_setting() {
+            var setting = document.getElementById("setting");
+            setting.style.display = setting.style.display === "none" ? "block" : "none";
+        }
+
+        function show_btn() {
+            document.getElementById("btn_group").style.display = "block";
+        }
+
+        function save_cookie() {
+            // 保存设置的逻辑
+        }
+
         function playSong(url) {
-            document.getElementById('musicPlayer').innerHTML = '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="' + url + '"></iframe>';
+            var musicPlayer = document.getElementById("musicPlayer");
+            musicPlayer.innerHTML = `<iframe src="${url}" width="300" height="100" frameborder="0" scrolling="no" allowtransparency="true"></iframe>`;
         }
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJTY5KVphtPhzWj9WO1clHTMGaXmkTpPbb7+5cQv5R5/3r5Q" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyLwnrPp9hvXt2l9Jv9zfqL3tOj9AgnTg5y7MQ/" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
