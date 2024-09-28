@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>选择歌曲并播放</title>
+    <title>游戏与音乐选择</title>
     <style>
         /* 弹窗样式 */
         #songModal {
@@ -45,11 +45,19 @@
         iframe {
             display: none;
         }
+
+        #game {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid black;
+            background-color: lightgray;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- 选择歌曲按钮 -->
     <button onclick="openSongModal()">选择歌曲</button>
 
     <!-- 弹窗 -->
@@ -82,6 +90,14 @@
 
     <!-- 隐藏的 iframe 播放器 -->
     <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src=""></iframe>
+
+    <!-- 游戏区域 -->
+    <div id="game">
+        <h2>游戏内容</h2>
+        <p>这里是游戏内容展示区。</p>
+        <!-- 你可以在此处添加游戏功能或嵌入游戏内容 -->
+        <p>在这里玩游戏的同时，还可以听你喜欢的音乐。</p>
+    </div>
 
     <script>
         // 打开弹窗
