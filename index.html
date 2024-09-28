@@ -1,103 +1,65 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏与音乐选择</title>
-    <style>
-        /* 弹窗样式 */
-        #songModal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        #songModalContent {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        .closeBtn {
-            float: right;
-            font-size: 24px;
-            font-weight: bold;
-            color: #aaa;
-        }
-
-        .closeBtn:hover,
-        .closeBtn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        iframe {
-            display: none;
-        }
-
-        #game {
-            margin-top: 20px;
-            padding: 20px;
-            border: 2px solid black;
-            background-color: lightgray;
-        }
-    </style>
+    <title>la太美</title>
+    <meta itemprop="name" content="la太美" />
+    <meta itemprop="description" content="la太美" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="./static/index.css" rel="stylesheet" type="text/css">
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="./static/index.js"></script>
 </head>
 
 <body>
 
-    <!-- 选择歌曲按钮 -->
-    <button onclick="openSongModal()">选择歌曲</button>
+    <!-- 按钮 -->
+    <button type="button" class="btn btn-primary" onclick="openSongModal()">选择歌曲</button>
 
     <!-- 弹窗 -->
-    <div id="songModal">
-        <div id="songModalContent">
-            <span class="closeBtn" onclick="closeSongModal()">&times;</span>
-            <h3>选择歌曲</h3>
-            <div id="songList">
-                <button onclick="playSong('2145509123')">Love Party</button>
-                <button onclick="playSong('2066577934')">相见即相恋</button>
-                <button onclick="playSong('2066847713')">夕阳西下</button>
-                <button onclick="playSong('2067567035')">阳光沐浴</button>
-                <button onclick="playSong('2615357565')">时空余晖</button>
-                <button onclick="playSong('2070109881')">新爱Drill</button>
-                <button onclick="playSong('2113419406')">恋爱告白</button>
-                <button onclick="playSong('2138192160')">阿拉斯加海湾</button>
-                <button onclick="playSong('2060811949')">这一世遇你</button>
-                <button onclick="playSong('2145509205')">利己主义者</button>
-                <button onclick="playSong('2068481501')">Forever Brother</button>
-                <button onclick="playSong('2626884237')">暗恋回忆录</button>
-                <button onclick="playSong('2607008229')">资本游戏</button>
-                <button onclick="playSong('2622773376')">心杂</button>
-                <button onclick="playSong('2069059939')">星辰与爱</button>
-                <button onclick="playSong('2622775174')">乙游·玩家</button>
-                <button onclick="playSong('2073546992')">情书</button>
-                <button onclick="playSong('2622773547')">总是在</button>
+    <div id="songModal" class="modal" tabindex="-1" role="dialog" style="display:none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">选择一首歌曲</h5>
+                    <button type="button" class="close" onclick="closeSongModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- 歌曲列表 -->
+                    <div id="songList">
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2145509123')">Love Party</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2066577934')">相见即相恋</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2066847713')">夕阳西下</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2067567035')">阳光沐浴</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2615357565')">时空余晖</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2070109881')">新爱Drill</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2113419406')">恋爱告白</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2138192160')">阿拉斯加海湾</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2060811949')">这一世遇你</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2145509205')">利己主义者</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2068481501')">Forever Brother</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2626884237')">暗恋回忆录</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2607008229')">资本游戏</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2622773376')">心杂</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2069059939')">星辰与爱</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2622775174')">乙游·玩家</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2073546992')">情书</button><br>
+                        <button type="button" class="btn btn-secondary" onclick="playSong('2622773547')">总是在</button><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeSongModal()">关闭</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 隐藏的 iframe 播放器 -->
-    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src=""></iframe>
-
-    <!-- 游戏区域 -->
-    <div id="game">
-        <h2>游戏内容</h2>
-        <p>这里是游戏内容展示区。</p>
-        <!-- 你可以在此处添加游戏功能或嵌入游戏内容 -->
-        <p>在这里玩游戏的同时，还可以听你喜欢的音乐。</p>
-    </div>
+    <!-- 播放器 -->
+    <iframe id="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" style="display:none;"></iframe>
 
     <script>
         // 打开弹窗
@@ -112,9 +74,10 @@
 
         // 播放歌曲
         function playSong(songId) {
-            var iframe = document.getElementById('musicPlayer');
-            iframe.src = "//music.163.com/outchain/player?type=2&id=" + songId + "&auto=1&height=66";
-            iframe.style.display = "block";
+            var player = document.getElementById('musicPlayer');
+            player.style.display = 'block';
+            player.src = "//music.163.com/outchain/player?type=2&id=" + songId + "&auto=1&height=66";
+            closeSongModal();
         }
     </script>
 
