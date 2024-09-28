@@ -7,17 +7,46 @@
     <meta itemprop="description" content="la太美" />
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="./static/index.css" rel="stylesheet" type="text/css">
-    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
-    <script src="./static/index.js"></script>
+    <style>
+        /* 弹窗样式 */
+        #songModal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* 上边距 */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* 宽度 */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body onLoad="init()" oncontextmenu=self.event.returnValue=false>
 
-    <!-- Game Score Layer -->
     <div id="GameScoreLayer" class="BBOX SHADE bgc1" style="display:none;">
         <div style="padding:5%;margin-top: 200px;background-color: rgba(125, 181, 216, 0.3);">
             <div id="GameScoreLayer-text"></div>
@@ -26,8 +55,7 @@
             <button type="button" class="btn btn-secondary btn-lg" onclick="replayBtn()">重来</button>
         </div>
     </div>
-    
-    <!-- Welcome Section -->
+
     <div id="welcome" class="SHADE BOX-M">
         <div class="welcome-bg FILL"></div>
         <div class="FILL BOX-M" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;">
@@ -41,12 +69,10 @@
                 </div>
                 <br />
                 <div id="btn_group" style="display: block;">
-                    <button type="button" id="ready-btn" class="btn btn-primary loading btn-lg" onclick="startGame()">开始la太美</button>
+                    <button type="button" id="song-btn" class="btn btn-primary btn-lg" onclick="openModal()">选择歌曲</button>
+                    <button type="button" id="ready-btn" class="btn btn-primary btn-lg" onclick="startGame()">开始la太美</button>
                     <br /><br />
                     <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">按键自定义</button>
-                    <br /><br />
-                    <!-- Add button to open song selection modal -->
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#songModal">选择歌曲</button>
                 </div>
                 <div id="setting" style="display: none;">
                     <div class="input-group mb-3" style="display: none;">
@@ -73,55 +99,45 @@
         </div>
     </div>
 
-    <!-- Song Selection Modal -->
-    <div class="modal fade" id="songModal" tabindex="-1" role="dialog" aria-labelledby="songModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="songModalLabel">选择歌曲</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        Love Party：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66"></iframe><br>
-                        相见即相恋：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66"></iframe><br>
-                        夕阳西下：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66"></iframe><br>
-                        阳光沐浴：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66"></iframe><br>
-                        时空余晖：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2615357565&auto=1&height=66"></iframe><br>
-                        新爱Drill：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2070109881&auto=1&height=66"></iframe><br>
-                        恋爱告白：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2113419406&auto=1&height=66"></iframe><br>
-                        阿拉斯加海湾：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2138192160&auto=1&height=66"></iframe><br>
-                        这一世遇你：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2060811949&auto=1&height=66"></iframe><br>
-                        利己主义者：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509205&auto=1&height=66"></iframe><br>
-                        Forever Brother：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2068481501&auto=1&height=66"></iframe><br>
-                        暗恋回忆录：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2626884237&auto=1&height=66"></iframe><br>
-                        资本游戏 ：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2607008229&auto=1&height=66"></iframe><br>
-                        心杂：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622773376&auto=1&height=66"></iframe><br>
-                        星辰与爱：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2069059939&auto=1&height=66"></iframe><br>
-                        乙游·玩家：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622775174&auto=1&height=66"></iframe><br>
-                        情书：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2073546992&auto=1&height=66"></iframe><br>
-                        总是在：<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2622773547&auto=1&height=66"></iframe><br>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                </div>
+    <!-- 弹窗 -->
+    <div id="songModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>选择歌曲</h2>
+            <div>
+                Love Party：
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2145509123&auto=1&height=66"></iframe><br>
+                相见即相恋：
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066577934&auto=1&height=66"></iframe><br>
+                夕阳西下：
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2066847713&auto=1&height=66"></iframe><br>
+                阳光沐浴：
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2067567035&auto=1&height=66"></iframe><br>
+                <!-- 更多歌曲... -->
             </div>
         </div>
     </div>
 
     <script>
         function startGame() {
-            // 继续游戏初始化逻辑
-            // initGame(); // 假设这是游戏开始的函数
+            // 游戏初始化逻辑
         }
-    </script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rTka4on3jQq/7J5u1P+6oJ4B5BRZy2UbN8ikhtF7x8qx5NZH9" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-JZ8bFZ9k5YAVl7gImr4hZ4f7AqU8EG1gkM5S9jwiEJw4e4+ChcT8Z4nJACsb/xW" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-1oX8jtEXQ46iN+6wD1yY7PKc3r5Pi5OzN1wXkD0xH5Kl0H7O5jFbMbnpH5I9Z6Z" crossorigin="anonymous"></script>
+        function openModal() {
+            document.getElementById('songModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('songModal').style.display = 'none';
+        }
+
+        // 点击窗口外部关闭弹窗
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('songModal')) {
+                closeModal();
+            }
+        };
+    </script>
 </body>
 
 </html>
